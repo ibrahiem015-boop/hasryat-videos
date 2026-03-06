@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حصريات - خادم مركزي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: white;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar {
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-area {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .user-badge {
+            background: #333;
+            padding: 8px 15px;
+            border-radius: 25px;
+            color: #4ecdc4;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .dev-badge {
+            background: #ff6b6b;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .logout-btn {
+            background: #ff4757;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-header {
+            animation: gradient 10s infinite;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #ff6b6b);
+            background-size: 200% 200%;
+            padding: 15px;
+            border-radius: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .stats-bar {
+            background: linear-gradient(135deg, #ff6b6b20, #4ecdc420);
+            border-radius: 30px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #4ecdc4;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 40px;
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .upload-section {
+            margin: 20px 0;
+            display: none;
+        }
+
+        .upload-section.visible {
+            display: block;
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 40px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .dev-actions {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .dev-action-btn {
+            flex: 1;
+            padding: 15px;
+            background: #333;
+            border: 1px solid #ff6b6b;
+            border-radius: 30px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .dev-action-btn:hover {
+            background: #ff6b6b;
+        }
+
+        .dev-action-btn.danger {
+            border-color: #ff4757;
+        }
+
+        .dev-action-btn.danger:hover {
+            background: #ff4757;
+        }
+
+        .buttons-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0 20px;
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 30px;
+        }
+
+        .buttons-title {
+            color: #4ecdc4;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .total-badge {
+            background: #333;
+            padding: 8px 20px;
+            border-radius: 25px;
+            color: #ff6b6b;
+            font-size: 14px;
+        }
+
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin: 20px 0 40px;
+        }
+
+        .page-button {
+            background: #1a1a1a;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page-button:hover {
+            transform: translateY(-5px);
+            border-color: #4ecdc4;
+            box-shadow: 0 10px 20px rgba(78, 205, 196, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .button-number {
+            font-size: 36px;
+            color: #4ecdc4;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .button-range {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin: 5px 0;
+        }
+
+        .button-count {
+            background: #333;
+            padding: 5px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .upload-page {
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .upload-page.active {
+            display: block;
+        }
+
+        .file-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 150px;
+            border: 3px dashed #4ecdc4;
+            border-radius: 30px;
+            margin: 20px 0;
+            cursor: pointer;
+            color: #4ecdc4;
+            font-size: 60px;
+            background: #222;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .counter {
+            color: #4ecdc4;
+            font-size: 16px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .files-list {
+            max-height: 250px;
+            overflow-y: auto;
+            background: #222;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            color: white;
+            font-size: 13px;
+        }
+
+        .upload-action-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px 0;
+        }
+
+        .upload-action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .back-btn {
+            text-align: center;
+            color: #888;
+            margin-top: 15px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .upload-progress {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            border: 2px solid #4ecdc4;
+            border-radius: 30px;
+            padding: 20px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .progress-details {
+            color: #888;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .videos-page {
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .videos-page.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .page-header h2 {
+            color: #4ecdc4;
+        }
+
+        .close-page {
+            background: #333;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .video-card {
+            background: #222;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            border: 1px solid #333;
+        }
+
+        .video-card:hover {
+            transform: translateY(-3px);
+            border-color: #4ecdc4;
+        }
+
+        .video-thumb {
+            height: 100px;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            position: relative;
+        }
+
+        .video-number {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+
+        .video-info {
+            padding: 12px;
+        }
+
+        .video-name {
+            color: white;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .video-meta {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .video-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .play-btn {
+            background: #4ecdc4;
+            color: black;
+        }
+
+        .download-btn {
+            background: #333;
+            color: #4ecdc4;
+            border: 1px solid #4ecdc4;
+        }
+
+        .download-btn.dev-only {
+            display: none;
+        }
+
+        .download-btn.dev-only.visible {
+            display: block;
+        }
+
+        .dev-only {
+            display: none;
+        }
+
+        .dev-only.visible {
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            background: #333;
+            color: white;
+        }
+
+        .modal-content select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 25px;
+            background: #333;
+            color: white;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-btn.primary {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: #333;
+            color: white;
+        }
+
+        .modal-btn.danger {
+            background: #ff4757;
+            color: white;
+        }
+
+        .modal-link {
+            color: #4ecdc4;
+            cursor: pointer;
+            margin-top: 15px;
+            display: block;
+        }
+
+        .video-player {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+        }
+
+        .video-player.active {
+            display: flex;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .close-player {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 3001;
+        }
+
+        .server-status {
+            background: #1a1a1a;
+            padding: 10px 15px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #2ed573;
+        }
+
+        .status-dot.offline {
+            background: #ff4757;
+        }
+    </style>
+</head>
+<body>
+    <!-- مشغل الفيديو -->
+    <div class="video-player" id="videoPlayer">
+        <button class="close-player" onclick="closeVideo()">✕</button>
+        <video id="playerVideo" controls></video>
+    </div>
+
+    <div class="upload-progress" id="uploadProgress">
+        <div class="progress-header">
+            <span>📤 جاري الرفع</span>
+            <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-details" id="progressDetails"></div>
+    </div>
+
+    <!-- نوافذ -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <h2 style="color:#4ecdc4;">🔐 تسجيل الدخول</h2>
+            <input type="email" id="loginEmail" placeholder="البريد">
+            <input type="password" id="loginPassword" placeholder="كلمة المرور">
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="loginSubmit">دخول</button>
+                <button class="modal-btn secondary" id="cancelLogin">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="createUserModal">
+        <div class="modal-content">
+            <h2 style="color:#4ecdc4;">✨ إنشاء حساب (للمطور)</h2>
+            <input type="text" id="newName" placeholder="الاسم">
+            <input type="email" id="newEmail" placeholder="البريد">
+            <input type="text" id="newPassword" placeholder="كلمة المرور">
+            <select id="subscriptionDays">
+                <option value="30">30 يوم</option>
+                <option value="60">60 يوم</option>
+                <option value="90">90 يوم</option>
+                <option value="180">180 يوم</option>
+                <option value="365">سنة</option>
+                <option value="0">غير محدود</option>
+            </select>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="createUserSubmit">إنشاء</button>
+                <button class="modal-btn secondary" id="cancelCreate">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="deleteAllModal">
+        <div class="modal-content">
+            <h3 style="color:#ff6b6b;">⚠️ حذف الكل</h3>
+            <p style="color:#888;">هل أنت متأكد؟</p>
+            <div class="modal-buttons">
+                <button class="modal-btn danger" id="confirmDeleteAll">نعم</button>
+                <button class="modal-btn secondary" id="cancelDeleteAll">لا</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="exitModal">
+        <div class="modal-content">
+            <h3 style="color:#ff6b6b;">⚠️ خروج</h3>
+            <p style="color:#888;">هل أنت متأكد؟</p>
+            <div class="modal-buttons">
+                <button class="modal-btn primary" id="confirmExit">نعم</button>
+                <button class="modal-btn secondary" id="cancelExit">لا</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="animated-header">
+            ✨ حصريات - خادم مركزي ✨
+        </div>
+
+        <!-- حالة الخادم -->
+        <div class="server-status" id="serverStatus">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">جاري الاتصال بالخادم...</span>
+        </div>
+
+        <div class="navbar">
+            <div class="logo">🎬 حصريات</div>
+            <div class="user-area">
+                <span class="user-badge" id="userName">تسجيل الدخول</span>
+                <div class="dev-badge" id="devBadge" style="display: none;">⚙️</div>
+                <button class="logout-btn" id="logoutBtn" style="display: none;">🚪</button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalVideos">0</div>
+                <div class="stat-label">إجمالي المقاطع</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="totalButtons">0</div>
+                <div class="stat-label">عدد الأزرار</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">10</div>
+                <div class="stat-label">مقطع/زر</div>
+            </div>
+        </div>
+
+        <div class="dev-actions dev-only" id="devActions">
+            <button class="dev-action-btn" id="refreshBtn">🔄 تحديث الأزرار</button>
+            <button class="dev-action-btn danger" id="deleteAllBtn">🗑️ حذف الكل</button>
+        </div>
+
+        <div class="upload-section dev-only" id="uploadSection">
+            <button class="upload-btn" id="showUploadBtn">📦 رفع مقاطع</button>
+        </div>
+
+        <div class="buttons-header">
+            <span class="buttons-title">📌 الأزرار</span>
+            <span class="total-badge" id="buttonsCount">0 زر</span>
+        </div>
+
+        <div class="buttons-grid" id="buttonsGrid"></div>
+
+        <div class="upload-page" id="uploadPage">
+            <h2>📦 رفع مقاطع</h2>
+            <label class="file-label" for="fileInput" id="fileLabel">📁</label>
+            <input type="file" id="fileInput" accept="video/*" multiple>
+            <div class="counter" id="counter">0 مقطع</div>
+            <div class="files-list" id="filesList"></div>
+            <button class="upload-action-btn" id="uploadBtn" disabled>بدء الرفع</button>
+            <div class="back-btn" id="backBtn">← رجوع</div>
+        </div>
+
+        <div class="videos-page" id="videosPage">
+            <div class="page-header">
+                <h2 id="pageTitle"></h2>
+                <button class="close-page" id="closeVideosPage">✕</button>
+            </div>
+            <div class="videos-grid" id="videosGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        // ===== إعدادات =====
+        const DEVELOPER_EMAIL = 'admin@hasryat.com';
+        const DEVELOPER_PASSWORD = 'Admin@123';
+        const VIDEOS_PER_BUTTON = 10;
+        
+        // ===== إعدادات الخادم =====
+        const SERVER_URL = 'https://your-username.github.io/hasryat-videos/'; // غير هذا
+        const API_URL = 'https://api.github.com/repos/your-username/hasryat-videos/contents/'; // غير هذا
+        const GITHUB_TOKEN = 'your_github_token'; // ستحتاج Token
+
+        let users = {
+            [DEVELOPER_EMAIL]: {
+                email: DEVELOPER_EMAIL,
+                name: 'مدير النظام',
+                password: DEVELOPER_PASSWORD,
+                isDeveloper: true,
+                expiresAt: null
+            }
+        };
+
+        let currentUser = null;
+        let videos = [];
+        let selectedFiles = [];
+
+        // ===== الاتصال بالخادم =====
+        async function checkServer() {
+            try {
+                const response = await fetch(SERVER_URL + 'videos.json', { mode: 'no-cors' });
+                document.getElementById('statusDot').className = 'status-dot';
+                document.getElementById('statusText').textContent = '✅ متصل بالخادم';
+            } catch (e) {
+                document.getElementById('statusDot').className = 'status-dot offline';
+                document.getElementById('statusText').textContent = '❌ غير متصل - استخدم التخزين المحلي';
+            }
+        }
+
+        // ===== تحميل الفيديوهات من الخادم =====
+        async function loadVideosFromServer() {
+            try {
+                const response = await fetch(SERVER_URL + 'videos.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.videos || [];
+                }
+            } catch (e) {
+                console.log('استخدام التخزين المحلي');
+            }
+            return loadVideosFromLocal();
+        }
+
+        // ===== تخزين محلي كنسخة احتياطية =====
+        function loadVideosFromLocal() {
+            const saved = localStorage.getItem('hasryat_videos');
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveVideosToLocal(videos) {
+            localStorage.setItem('hasryat_videos', JSON.stringify(videos));
+        }
+
+        // ===== تحميل البيانات =====
+        function loadUsers() {
+            const saved = localStorage.getItem('hasryat_users');
+            if (saved) {
+                try {
+                    users = JSON.parse(saved);
+                    if (!users[DEVELOPER_EMAIL]) {
+                        users[DEVELOPER_EMAIL] = {
+                            email: DEVELOPER_EMAIL,
+                            name: 'مدير النظام',
+                            password: DEVELOPER_PASSWORD,
+                            isDeveloper: true,
+                            expiresAt: null
+                        };
+                    }
+                } catch (e) {}
+            }
+        }
+
+        function saveUsers() {
+            localStorage.setItem('hasryat_users', JSON.stringify(users));
+        }
+
+        async function loadData() {
+            loadUsers();
+            videos = await loadVideosFromServer();
+            
+            const savedUser = localStorage.getItem('hasryat_current_user');
+            if (savedUser) {
+                try {
+                    const user = JSON.parse(savedUser);
+                    if (users[user.email]) {
+                        currentUser = users[user.email];
+                        if (currentUser.expiresAt && !currentUser.isDeveloper) {
+                            if (new Date(currentUser.expiresAt) < new Date()) {
+                                currentUser = null;
+                                localStorage.removeItem('hasryat_current_user');
+                            }
+                        }
+                    }
+                } catch (e) {}
+            }
+            
+            updateUI();
+            updateButtons();
+            checkServer();
+        }
+
+        function updateUI() {
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('logoutBtn').style.display = 'block';
+                
+                if (currentUser.isDeveloper) {
+                    document.getElementById('devBadge').style.display = 'flex';
+                    document.querySelectorAll('.dev-only').forEach(el => el.classList.add('visible'));
+                } else {
+                    document.getElementById('devBadge').style.display = 'none';
+                    document.querySelectorAll('.dev-only').forEach(el => el.classList.remove('visible'));
+                }
+            } else {
+                document.getElementById('userName').textContent = 'تسجيل الدخول';
+                document.getElementById('logoutBtn').style.display = 'none';
+                document.getElementById('devBadge').style.display = 'none';
+                document.querySelectorAll('.dev-only').forEach(el => el.classList.remove('visible'));
+            }
+        }
+
+        function updateButtons() {
+            const buttonsGrid = document.getElementById('buttonsGrid');
+            const totalVideos = videos.length;
+            const totalButtons = Math.ceil(totalVideos / VIDEOS_PER_BUTTON);
+            
+            document.getElementById('totalVideos').textContent = totalVideos;
+            document.getElementById('totalButtons').textContent = totalButtons;
+            document.getElementById('buttonsCount').textContent = totalButtons + ' زر';
+            
+            buttonsGrid.innerHTML = '';
+            
+            if (totalButtons === 0) {
+                buttonsGrid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#888;">📭 لا توجد أزرار</div>';
+                return;
+            }
+            
+            for (let i = 1; i <= totalButtons; i++) {
+                const start = (i - 1) * VIDEOS_PER_BUTTON + 1;
+                const end = Math.min(i * VIDEOS_PER_BUTTON, totalVideos);
+                
+                const button = document.createElement('div');
+                button.className = 'page-button';
+                button.onclick = () => showVideosPage(i, start, end);
+                
+                button.innerHTML = `
+                    <div class="button-number">${i}</div>
+                    <div class="button-range">${start} - ${end}</div>
+                    <div class="button-count">${end-start+1} مقطع</div>
+                `;
+                
+                buttonsGrid.appendChild(button);
+            }
+        }
+
+        function showVideosPage(btnNum, start, end) {
+            const pageVideos = videos.slice(start-1, end);
+            const grid = document.getElementById('videosGrid');
+            
+            document.getElementById('pageTitle').textContent = `📄 الزر ${btnNum} - مقاطع ${start} إلى ${end}`;
+            grid.innerHTML = '';
+            
+            pageVideos.forEach((v, i) => {
+                const idx = start + i;
+                grid.innerHTML += `
+                    <div class="video-card">
+                        <div class="video-thumb">
+                            🎬
+                            <span class="video-number">#${idx}</span>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-name">${v.name}</div>
+                            <div class="video-meta">${(v.size/1024/1024).toFixed(2)} MB</div>
+                            <div class="video-actions">
+                                <button class="action-btn play-btn" onclick="playVideo(${idx-1})">▶️ تشغيل</button>
+                                ${currentUser?.isDeveloper ? `<button class="action-btn download-btn" onclick="downloadVideo(${idx-1})">⬇️ تحميل</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.querySelector('.buttons-header').style.display = 'none';
+            document.getElementById('buttonsGrid').style.display = 'none';
+            document.getElementById('videosPage').classList.add('active');
+        }
+
+        // ===== تشغيل الفيديو =====
+        window.playVideo = (i) => {
+            if (!currentUser) {
+                alert('❌ سجل دخول أولاً');
+                document.getElementById('loginModal').classList.add('active');
+                return;
+            }
+            
+            const v = videos[i];
+            if (!v) return;
+            
+            const player = document.getElementById('videoPlayer');
+            const video = document.getElementById('playerVideo');
+            
+            video.src = v.url;
+            player.classList.add('active');
+            video.play();
+        };
+
+        window.closeVideo = () => {
+            const player = document.getElementById('videoPlayer');
+            const video = document.getElementById('playerVideo');
+            video.pause();
+            video.src = '';
+            player.classList.remove('active');
+        };
+
+        window.downloadVideo = (i) => {
+            if (!currentUser?.isDeveloper) return alert('❌ للمطور فقط');
+            const v = videos[i];
+            const a = document.createElement('a');
+            a.href = v.url;
+            a.download = v.name;
+            a.click();
+        };
+
+        // ===== رفع الملفات =====
+        document.getElementById('fileInput').onchange = function(e) {
+            selectedFiles = Array.from(this.files);
+            document.getElementById('counter').textContent = selectedFiles.length + ' مقطع';
+            document.getElementById('uploadBtn').disabled = false;
+            
+            const list = document.getElementById('filesList');
+            list.innerHTML = '';
+            selectedFiles.forEach((f, i) => {
+                list.innerHTML += `<div class="file-item">${i+1}. ${f.name} <span>${(f.size/1024/1024).toFixed(2)} MB</span></div>`;
+            });
+        };
+
+        document.getElementById('uploadBtn').onclick = async function() {
+            this.disabled = true;
+            const progress = document.getElementById('uploadProgress');
+            progress.style.display = 'block';
+            
+            const newVideos = [];
+            
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const f = selectedFiles[i];
+                const p = Math.round(((i+1)/selectedFiles.length)*100);
+                
+                document.getElementById('progressFill').style.width = p + '%';
+                document.getElementById('progressPercent').textContent = p + '%';
+                document.getElementById('progressDetails').textContent = `${f.name} (${i+1}/${selectedFiles.length})`;
+                
+                await new Promise(r => setTimeout(r, 100));
+                
+                const reader = new FileReader();
+                const base64 = await new Promise(r => { reader.onload = () => r(reader.result); reader.readAsDataURL(f); });
+                
+                const videoData = {
+                    id: Date.now() + i + Math.random(),
+                    name: f.name,
+                    size: f.size,
+                    url: base64,
+                    uploadedBy: currentUser?.email || 'developer',
+                    date: new Date().toLocaleDateString('ar-EG')
+                };
+                
+                newVideos.push(videoData);
+            }
+            
+            videos = [...videos, ...newVideos];
+            saveVideosToLocal(videos);
+            
+            progress.style.display = 'none';
+            document.getElementById('backBtn').click();
+            updateButtons();
+            
+            alert(`✅ تم رفع ${newVideos.length} مقاطع (محلياً)`);
+            this.disabled = false;
+        };
+
+        // ===== أحداث =====
+        document.getElementById('refreshBtn').onclick = () => {
+            updateButtons();
+            alert('🔄 تم التحديث');
+        };
+
+        document.getElementById('deleteAllBtn').onclick = () => {
+            document.getElementById('deleteAllModal').classList.add('active');
+        };
+
+        document.getElementById('confirmDeleteAll').onclick = async () => {
+            videos = [];
+            saveVideosToLocal(videos);
+            updateButtons();
+            document.getElementById('deleteAllModal').classList.remove('active');
+            document.getElementById('videosPage').classList.remove('active');
+            document.querySelector('.buttons-header').style.display = 'flex';
+            document.getElementById('buttonsGrid').style.display = 'grid';
+            alert('🗑️ تم الحذف');
+        };
+
+        document.getElementById('cancelDeleteAll').onclick = () => {
+            document.getElementById('deleteAllModal').classList.remove('active');
+        };
+
+        document.getElementById('userName').onclick = () => {
+            if (!currentUser) document.getElementById('loginModal').classList.add('active');
+        };
+
+        document.getElementById('devBadge').onclick = () => {
+            document.getElementById('createUserModal').classList.add('active');
+        };
+
+        document.getElementById('loginSubmit').onclick = () => {
+            const e = document.getElementById('loginEmail').value;
+            const p = document.getElementById('loginPassword').value;
+            
+            if (users[e] && users[e].password === p) {
+                if (users[e].expiresAt && !users[e].isDeveloper) {
+                    if (new Date(users[e].expiresAt) < new Date()) {
+                        alert('❌ انتهى الاشتراك');
+                        return;
+                    }
+                }
+                currentUser = users[e];
+                localStorage.setItem('hasryat_current_user', JSON.stringify({email:e}));
+                updateUI();
+                document.getElementById('loginModal').classList.remove('active');
+            } else {
+                alert('❌ خطأ في البريد أو كلمة المرور');
+            }
+        };
+
+        document.getElementById('createUserSubmit').onclick = () => {
+            const n = document.getElementById('newName').value;
+            const e = document.getElementById('newEmail').value;
+            const p = document.getElementById('newPassword').value;
+            const d = parseInt(document.getElementById('subscriptionDays').value);
+            
+            if (!n||!e||!p) return alert('❌ املأ الحقول');
+            if (users[e]) return alert('❌ البريد موجود');
+            
+            let expiry = null;
+            if (d > 0) {
+                expiry = new Date();
+                expiry.setDate(expiry.getDate() + d);
+            }
+            
+            users[e] = {
+                email: e,
+                name: n,
+                password: p,
+                isDeveloper: false,
+                expiresAt: expiry ? expiry.toISOString() : null
+            };
+            
+            saveUsers();
+            alert(`✅ تم إنشاء حساب\nبريد: ${e}\nكلمة مرور: ${p}`);
+            document.getElementById('createUserModal').classList.remove('active');
+        };
+
+        document.getElementById('logoutBtn').onclick = () => document.getElementById('exitModal').classList.add('active');
+        
+        document.getElementById('confirmExit').onclick = () => {
+            localStorage.removeItem('hasryat_current_user');
+            currentUser = null;
+            updateUI();
+            document.getElementById('exitModal').classList.remove('active');
+            document.getElementById('videosPage').classList.remove('active');
+            document.querySelector('.buttons-header').style.display = 'flex';
+            document.getElementById('buttonsGrid').style.display = 'grid';
+            closeVideo();
+        };
+
+        document.getElementById('showUploadBtn').onclick = () => {
+            document.querySelector('.buttons-header').style.display = 'none';
+            document.getElementById('buttonsGrid').style.display = 'none';
+            document.getElementById('uploadPage').classList.add('active');
+        };
+        
+        document.getElementById('backBtn').onclick = () => {
+            document.querySelector('.buttons-header').style.display = 'flex';
+            document.getElementById('buttonsGrid').style.display = 'grid';
+            document.getElementById('uploadPage').classList.remove('active');
+            document.getElementById('fileInput').value = '';
+            document.getElementById('filesList').innerHTML = '';
+            document.getElementById('counter').textContent = '0 مقطع';
+            document.getElementById('uploadBtn').disabled = true;
+        };
+        
+        document.getElementById('closeVideosPage').onclick = () => {
+            document.querySelector('.buttons-header').style.display = 'flex';
+            document.getElementById('buttonsGrid').style.display = 'grid';
+            document.getElementById('videosPage').classList.remove('active');
+        };
+
+        document.getElementById('cancelLogin').onclick = () => document.getElementById('loginModal').classList.remove('active');
+        document.getElementById('cancelCreate').onclick = () => document.getElementById('createUserModal').classList.remove('active');
+        document.getElementById('cancelExit').onclick = () => document.getElementById('exitModal').classList.remove('active');
+
+        window.onclick = (e) => {
+            if (e.target.classList.contains('modal')) e.target.classList.remove('active');
+        };
+
+        loadData();
+    </script>
+</body>
+</html>
